@@ -14,4 +14,4 @@ Slave-2 measures the ambient temperature momentarily via lm35. If the common tem
 ![slave-2](https://user-images.githubusercontent.com/62069736/120206941-7875b500-c234-11eb-8a16-8611e2b321c2.PNG)
 ### Slave-3: <br/>
 The selected product provides motor control within the information coming from the slave-3 master. 4 servo motors are used for 4 products. DC motor is used to reduce the ambient temperature. Compim output is provided via slave-3. 
-![slave-3](https://user-images.githubusercontent.com/62069736/120206968-7f042c80-c234-11eb-9bbd-63380b3894d5.PNG)
+![slave-3](https://user-images.githubusercontent.com/62069736/120207411-0d78ae00-c235-11eb-9dbe-510ee76bf351.PNG)
