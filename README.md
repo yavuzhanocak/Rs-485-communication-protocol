@@ -10,7 +10,7 @@ The system consists of 1 master and 3 slaves. Running the communication framewor
 * Max487
 * 2x16 Lcd <br/> 
 
-**Generated package structure:**
+**Package frame structure:**
 ```
 //
 //    +---------------+--------------+----------+-------------+------+-----+
@@ -25,6 +25,25 @@ The system consists of 1 master and 3 slaves. Running the communication framewor
 //    CRC:              1 byte            Numpad giris:istenilen ürün bilgisi
 //
 
+```
+
+**Package building structure:**
+```
+ output_high(gon);
+     send_buffer[0]=MASTER;
+     send_buffer[1]=SLAVE3;
+     send_buffer[2]=ACK;
+     send_buffer[3]=1;
+     send_buffer[4]=data_send;
+     crc=generate_8bit_crc(send_buffer,5,0x55);
+     send_buffer[5]=crc;
+      delay_ms(1);
+       for(int i=0;i<6;i++){
+             putc(send_buffer[i]);
+       }
+         delay_ms(10);
+      clear_interrupt(INT_RDA);
+  output_low(gon);
 ```
 ### Master:
   It constantly requests information from slave-1 and slave-2 within the data_istek() function. <br/> Data from Slave-1 enters Numpad classification process. If a product request is made, the input is sent to the slave-3 within the data-gonder() function and the product is printed on the LCD screen. If a password is entered from slave-1, the master detects password authentication. If the password is correct, the 'M' command is sent to the slave-3 within the data_gonder() function. If it is detected that the password entry is wrong, the 'Sifre yanlis' command is seen on the LCD screen. <br/>
