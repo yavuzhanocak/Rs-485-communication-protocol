@@ -12,7 +12,18 @@ The system consists of 1 master and 3 slaves. Running the communication framewor
 
 **Generated package structure:**
 ```
-asdasdasd 
+//
+//    +---------------+--------------+----------+-------------+------+-----+
+//    | Master adress | Slave adress | ACK/NACK | Data Length | Data | CRC |
+//    +---------------+--------------+----------+-------------+------+-----+
+//
+//    Master adress:    1 byte            Gönderilen veri açıklamaları:
+//    Slave adress:     1 byte            D:istek data
+//    ACK/NACK :        1 byte            E:yüksek sıcaklık
+//    Data Length:      1 byte            N:normal sıcaklık
+//    Data :            1 byte            M:Şifre doğru girdisi
+//    CRC:              1 byte            Numpad giris:istenilen ürün bilgisi
+//
 
 ```
 ### Master:
