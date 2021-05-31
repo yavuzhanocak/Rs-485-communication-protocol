@@ -1,0 +1,23 @@
+[PROJECT]
+Target=slavenumpad.hex
+Processor_Text=PIC16F877
+CCSVerions=5.007
+Compiler=PCM
+CCSVersion=5.007
+[Target Data]
+FileList=slavenumpad.c
+[Directories]
+Include=C:\Program Files (x86)\PICC\Devices\;C:\Program Files (x86)\PICC\Drivers\
+[D:\Yavuzhan\Dersler\Haberleþme\Proje\CCS\rs485\slave1\slavenumpad]
+Type=4
+[mru-list]
+1=slavenumpad.c
+[Opened Files]
+1=slavenumpad.c
+2=
+3=
+[slavenumpad.c]
+Type=4
+[Units]
+Count=1
+1=slavenumpad (main)

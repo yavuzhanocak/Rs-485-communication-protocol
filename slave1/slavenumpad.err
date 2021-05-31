@@ -1,0 +1,4 @@
+>>> Warning 202 "slavenumpad.c" Line 32(5,6): Variable never used:   a
+      Memory usage:   ROM=6%      RAM=8% - 13%
+      0 Errors,  1 Warnings.
+Build Successful.

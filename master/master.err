@@ -1,0 +1,4 @@
+>>> Warning 216 "master.c" Line 200(1,2): Interrupts disabled during call to prevent re-entrancy:  (generate_8bit_crc)
+      Memory usage:   ROM=18%      RAM=10% - 18%
+      0 Errors,  1 Warnings.
+Build Successful.

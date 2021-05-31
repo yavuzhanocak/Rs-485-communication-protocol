@@ -1,0 +1,88 @@
+#include <16f877.h>
+#device ADC=10
+#include <crc.c>
+#include <string.h>
+#include <stdlib.h>
+#fuses XT,NOWDT,NOPROTECT,NOBROWNOUT,NOLVP,NOPUT,NOWRT,NODEBUG,NOCPD
+#use delay (clock=4000000) 
+#use fast_io(a)
+#use fast_io(b)
+#define use_portb_lcd TRUE
+#include <lcd.c>
+#use rs232 (baud=9600, xmit=pin_C6, rcv=pin_C7, parity=N, stop=1) // RS232 protokolünün 9600 bit/sn baud hýzýnda olacaðýný ve
+#define enable pin_C4                                                                  // parity bitinin olmadýðýný, stop bitinin 1 bit olacaðý belirtiliyor
+
+char i,buffer[2],num=48,crc;  // klavye isminde 80 üyeli bir dizi tanýmlanýyor
+unsigned long int bilgi;
+float voltaj;
+int sicaklik;
+
+#int_RDA 
+void seri()
+{
+   char t1,t2,t3;
+   
+   t1 = getc();
+   if(t1=='2')
+   {
+      t2=getc();
+      t3 = getc();
+      if(t2 == 'S')
+      {
+         output_b(t3);
+      }
+      else if(t2=='D' && t3 == 'R')
+      {
+      buffer[0]='M';
+      buffer[1]='2';
+      buffer[2]=sicaklik;
+      crc=generate_8bit_crc(buffer,3,0x55);
+            delay_ms(10);
+            output_high(enable);
+            delay_ms(1);
+           // putc(buffer[0]);
+           // putc(buffer[1]);
+            putc(buffer[2]);
+          //  putc((int)(crc));
+            delay_ms(10);
+            output_low(enable);
+            
+         
+      }
+   }
+  
+}
+char sicaklik_oku(){
+   bilgi=read_adc();
+   voltaj=(0.0048828125*bilgi)*1000;
+   //sicaklik=(voltaj/10)+1;
+   sicaklik=atol(2);
+   lcd_gotoxy(1,2);
+   printf(lcd_putc,"%d",sicaklik);
+ }
+void main()
+{
+    set_tris_a(0x01);
+    set_tris_b(0x00);
+   
+    setup_adc(adc_clock_div_32);
+    setup_adc_ports(AN0);
+   
+    set_adc_channel(0);
+   
+    output_low(enable);
+    enable_interrupts(GLOBAL);
+    enable_interrupts(INT_RDA);
+   
+    lcd_init();                   
+                
+    lcd_gotoxy(1,1);             
+    lcd_putc("Urun secin"); 
+    lcd_gotoxy(1,2);  
+   while(TRUE)
+   {
+   sicaklik_oku();
+    
+   }
+
+}

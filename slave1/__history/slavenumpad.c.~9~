@@ -1,0 +1,56 @@
+#include <16f877.h>   
+#fuses XT,NOWDT,NOPROTECT,NOBROWNOUT,NOLVP,NOPUT,NOWRT,NODEBUG,NOCPD
+#use delay (clock=4000000) 
+#use rs232 (baud=9600, xmit=pin_C6, rcv=pin_C7, parity=N, stop=1) // RS232 protokolünün 9600 bit/sn baud hýzýnda olacaðýný ve
+                                                                  // TX,RX uçlarýnýn hangi pinler olacaðýný tanýmlýyor
+#define enable pin_C4                                                                  // parity bitinin olmadýðýný, stop bitinin 1 bit olacaðý belirtiliyor
+
+char   i,buffer[80];  // klavye isminde 80 üyeli bir dizi tanýmlanýyor
+char s1d,s2d, portd=0,portb=0, csum;
+int a=4;
+#int_RDA 
+void seri()
+{
+   char t1,t2,t3;
+   
+   t1 = getc();
+   if(t1=='1')
+   {
+      t2=getc();
+      t3 = getc();
+      if(t2 == 'S')
+      {
+         output_b(t3);
+      }
+      else if(t2=='D' && t3 == 'R')
+      {
+
+            delay_ms(10);
+            output_high(enable);
+            delay_ms(1);
+            putc('M');
+            putc('1');
+            putc('c');
+            delay_ms(10);
+            output_low(enable);
+  
+         
+      }
+   }
+  
+}
+
+void main()
+{
+   output_b(0);
+   output_low(enable);
+   enable_interrupts(GLOBAL);
+   enable_interrupts(INT_RDA);
+   while(TRUE)
+   {
+      output_low(enable);
+      portd=input_d();
+      portd=portd&0x0f;
+   }
+
+}

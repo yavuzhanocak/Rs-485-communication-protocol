@@ -1,0 +1,82 @@
+
+ROM used:   1434/8192 (18%)
+            1434/8192 (18%) including unused fragments
+
+            1.0 Average locations per line
+            4.8 Average locations per statement
+
+RAM used:   37/368 (10%) at main() level
+            66/368 (18%) worst case
+
+Stack used: 1 worst case (0 in main + 1 for interrupts)
+Stack size: 8
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  201   142  48  master.c
+  629     0   0  C:\Program Files (x86)\PICC\Devices\16f877.h
+  154    72  24  C:\Program Files (x86)\PICC\Drivers\crc.c
+  456    84  28  C:\Program Files (x86)\PICC\Drivers\lcd.c
+----- -----
+ 1440   298 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0    135   9   13  1104  9.3  generate_8bit_crc
+0     21   1    1             @delay_ms1
+0     23   2    1             @GETCH_BIU_1
+0      8   1    0             @const651
+ Inline         3   596  5.9  lcd_read_byte
+0      6   0    0    59  4.2  lcd_read_nibble
+0     12   1    1   179  3.3  lcd_send_nibble
+0     64   4    3   460  4.7  lcd_send_byte
+0     51   4    2   667  5.9  lcd_init
+0     18   1    4   208  6.3  lcd_gotoxy
+0     44   3    1   354  4.7  lcd_putc
+0     28   2    0             @const686
+0     79   6    1   899  6.3  seri
+0    438  31    1  1490  4.9  lcd_yazi
+0      7   0    0             @const701
+0     75   5    4             @PSTRINGC7_669
+0      8   1    0             @const703
+0      6   0    0             @const705
+ Inline         2             @MUL88
+ Inline         2             @PSTRINGC_669
+0      4   0    0             @const711
+0      6   0    0             @const712
+ Inline         5             @PSTRINGCN7_669
+0     21   1    3             @DIV88
+ Inline         6             @PRINTF_D_669
+0      3   0    0             @const722
+0      7   0    0             @const723
+0      3   0    0             @const725
+0      7   0    0             @const726
+0     76   5    1   370  1.4  data_istek
+0     65   5    2   520  4.3  data_gonder
+0    111   8    1  1341  5.4  data_motor
+0     59   4    0   280  2.8  MAIN
+ Inline         0             @cinit1
+
+Program metrics:
+    Functions               14
+    Statements              298
+    Comments                273
+    Volume (V)              13614
+    Difficulty (D)          65.1
+    Effort to implement (E) 886326
+    Time to implement (T)   13 hours, 41 minutes
+    Est Delivered Bugs (B)  3
+    Cyclomatic Complexity   32
+    Maintainability (MI)    112
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00003     4  0  
+00004-00030    45  0  
+00031-007FF  1385  614  
+00800-00FFF     0  2048  
+01000-017FF     0  2048  
+01800-01FFF     0  2048  
+
+
+

@@ -1,0 +1,7 @@
+>>> Warning 208 "LM35.c" Line 63(6,18): Function not void and does not return a value  sicaklik_oku
+>>> Warning 216 "LM35.c" Line 95(1,2): Interrupts disabled during call to prevent re-entrancy:  (@delay_ms1)
+>>> Warning 202 "LM35.c" Line 23(18,21): Variable never used:   num
+>>> Warning 202 "LM35.c" Line 62(7,11): Variable never used:   sayi
+      Memory usage:   ROM=19%      RAM=11% - 21%
+      0 Errors,  4 Warnings.
+Build Successful.

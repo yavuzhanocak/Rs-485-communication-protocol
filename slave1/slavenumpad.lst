@@ -1,0 +1,908 @@
+CCS PCM C Compiler, Version 5.007, 61971               20-May-21 16:56
+
+               Filename:   D:\Yavuzhan\Dersler\Haberleþme\Proje\CCS\rs485\slave1\slavenumpad.lst
+
+               ROM used:   505 words (6%)
+                           Largest free fragment is 2048
+               RAM used:   28 (8%) at main() level
+                           49 (13%) worst case
+               Stack used: 1 locations (0 in main + 1 for interrupts)
+               Stack size: 8
+
+*
+0000:  MOVLW  01
+0001:  MOVWF  0A
+0002:  GOTO   1BD
+0003:  NOP
+0004:  MOVWF  7F
+0005:  SWAPF  03,W
+0006:  CLRF   03
+0007:  MOVWF  21
+0008:  MOVF   0A,W
+0009:  MOVWF  20
+000A:  CLRF   0A
+000B:  MOVF   04,W
+000C:  MOVWF  22
+000D:  MOVF   77,W
+000E:  MOVWF  23
+000F:  MOVF   78,W
+0010:  MOVWF  24
+0011:  MOVF   79,W
+0012:  MOVWF  25
+0013:  MOVF   7A,W
+0014:  MOVWF  26
+0015:  BCF    03.7
+0016:  BCF    03.5
+0017:  MOVLW  8C
+0018:  MOVWF  04
+0019:  BTFSS  00.5
+001A:  GOTO   01D
+001B:  BTFSC  0C.5
+001C:  GOTO   02E
+001D:  MOVF   22,W
+001E:  MOVWF  04
+001F:  MOVF   23,W
+0020:  MOVWF  77
+0021:  MOVF   24,W
+0022:  MOVWF  78
+0023:  MOVF   25,W
+0024:  MOVWF  79
+0025:  MOVF   26,W
+0026:  MOVWF  7A
+0027:  MOVF   20,W
+0028:  MOVWF  0A
+0029:  SWAPF  21,W
+002A:  MOVWF  03
+002B:  SWAPF  7F,F
+002C:  SWAPF  7F,W
+002D:  RETFIE
+002E:  BCF    0A.3
+002F:  BCF    0A.4
+0030:  GOTO   056
+.................... // 
+.................... //    +---------------+--------------+----------+-------------+------+-----+ 
+.................... //    | Master adress | Slave adress | ACK/NACK | Data Length | Data | CRC | 
+.................... //    +---------------+--------------+----------+-------------+------+-----+ 
+.................... // 
+.................... //    Master adress:    1 byte                         
+.................... //    Slave adress:     1 byte 
+.................... //    ACK/NACK :        1 byte 
+.................... //    Data Length:      1 byte 
+.................... //    Data :            1 byte 
+.................... //    CRC:              1 byte 
+....................  
+.................... #include <16f877.h> 
+.................... //////// Standard Header file for the PIC16F877 device //////////////// 
+.................... #device PIC16F877 
+0031:  BCF    0A.0
+0032:  BCF    0A.1
+0033:  BCF    0A.2
+0034:  ADDWF  02,F
+0035:  RETLW  31
+0036:  RETLW  32
+0037:  RETLW  33
+0038:  RETLW  34
+0039:  RETLW  35
+003A:  RETLW  36
+003B:  RETLW  37
+003C:  RETLW  38
+003D:  RETLW  39
+003E:  RETLW  2A
+003F:  RETLW  30
+0040:  RETLW  23
+*
+0183:  CLRF   77
+0184:  CLRF   78
+0185:  MOVF   39,W
+0186:  BCF    03.0
+0187:  BTFSC  3A.0
+0188:  ADDWF  77,F
+0189:  RRF    77,F
+018A:  RRF    78,F
+018B:  BTFSC  3A.1
+018C:  ADDWF  77,F
+018D:  RRF    77,F
+018E:  RRF    78,F
+018F:  BTFSC  3A.2
+0190:  ADDWF  77,F
+0191:  RRF    77,F
+0192:  RRF    78,F
+0193:  BTFSC  3A.3
+0194:  ADDWF  77,F
+0195:  RRF    77,F
+0196:  RRF    78,F
+0197:  BTFSC  3A.4
+0198:  ADDWF  77,F
+0199:  RRF    77,F
+019A:  RRF    78,F
+019B:  BTFSC  3A.5
+019C:  ADDWF  77,F
+019D:  RRF    77,F
+019E:  RRF    78,F
+019F:  BTFSC  3A.6
+01A0:  ADDWF  77,F
+01A1:  RRF    77,F
+01A2:  RRF    78,F
+01A3:  BTFSC  3A.7
+01A4:  ADDWF  77,F
+01A5:  RRF    77,F
+01A6:  RRF    78,F
+....................  
+.................... #list 
+....................  
+.................... #include <crc.c> 
+.................... /////////////////////// Driver to generate CRC ////////////////////////// 
+.................... ////                                                                 //// 
+.................... ////  generate_8bit_crc(data, length, pattern)                       //// 
+.................... ////        Generates 8 bit crc from the data using the pattern.     //// 
+.................... ////                                                                 //// 
+.................... ////  generate_16bit_crc(data, length, pattern)                      //// 
+.................... ////        Generates 16 bit crc from the data using the pattern.    //// 
+.................... ////                                                                 //// 
+.................... ////  generate_32bit_crc(data, length, pattern)                      //// 
+.................... ////        Generates 32 bit crc from the data using the pattern.    //// 
+.................... ////                                                                 //// 
+.................... ///////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996,2003 Custom Computer Services         //// 
+.................... //// This source code may only be used by licensed users of the CCS  //// 
+.................... //// C compiler.  This source code may only be distributed to other  //// 
+.................... //// licensed users of the CCS C compiler.  No other use,            //// 
+.................... //// reproduction or distribution is permitted without written       //// 
+.................... //// permission.  Derivative programs created using this software    //// 
+.................... //// in object code form are not restricted in any way.              //// 
+.................... ///////////////////////////////////////////////////////////////////////// 
+....................  
+.................... #define CRC_16    0x8005      //bit pattern (1)1000 0000 0000 0101 
+.................... #define CRC_CCITT 0x1021      //bit pattern (1)0001 0000 0010 0001 
+.................... #define CRC_32    0x04C11DB7  //bit pattern (1)0000 0100 1100 0001 0001 1101 1011 0111 
+....................  
+....................  
+.................... int generate_8bit_crc(char* data, int16 length, int pattern) 
+.................... { 
+....................    int   *current_data; 
+....................    int   crc_byte; 
+....................    int16 byte_counter; 
+....................    int   bit_counter; 
+....................  
+....................    current_data = data; 
+*
+007D:  MOVF   40,W
+007E:  MOVWF  45
+007F:  MOVF   3F,W
+0080:  MOVWF  44
+....................    crc_byte = *current_data++; 
+0081:  MOVF   45,W
+0082:  MOVWF  7A
+0083:  MOVF   44,W
+0084:  INCF   44,F
+0085:  BTFSC  03.2
+0086:  INCF   45,F
+0087:  MOVWF  04
+0088:  BCF    03.7
+0089:  BTFSC  7A.0
+008A:  BSF    03.7
+008B:  MOVF   00,W
+008C:  MOVWF  46
+....................  
+....................    for(byte_counter=0; byte_counter < (length-1); byte_counter++) 
+008D:  CLRF   48
+008E:  CLRF   47
+008F:  MOVLW  01
+0090:  SUBWF  41,W
+0091:  MOVWF  77
+0092:  MOVF   42,W
+0093:  MOVWF  7A
+0094:  MOVLW  00
+0095:  BTFSS  03.0
+0096:  MOVLW  01
+0097:  SUBWF  7A,F
+0098:  MOVF   77,W
+0099:  MOVWF  78
+009A:  MOVF   48,W
+009B:  SUBWF  7A,W
+009C:  BTFSS  03.0
+009D:  GOTO   0F1
+009E:  BTFSS  03.2
+009F:  GOTO   0A4
+00A0:  MOVF   78,W
+00A1:  SUBWF  47,W
+00A2:  BTFSC  03.0
+00A3:  GOTO   0F1
+....................    { 
+....................       for(bit_counter=0; bit_counter < 8; bit_counter++) 
+00A4:  CLRF   49
+00A5:  MOVF   49,W
+00A6:  SUBLW  07
+00A7:  BTFSS  03.0
+00A8:  GOTO   0EA
+....................       { 
+....................          if(!bit_test(crc_byte,7)) 
+00A9:  BTFSC  46.7
+00AA:  GOTO   0C9
+....................          { 
+....................             crc_byte <<= 1; 
+00AB:  BCF    03.0
+00AC:  RLF    46,F
+....................             bit_test(*current_data, 7 - bit_counter) ? 
+....................                bit_set(crc_byte,0) : bit_clear(crc_byte,0); 
+00AD:  MOVF   45,W
+00AE:  MOVWF  7A
+00AF:  MOVF   44,W
+00B0:  MOVWF  04
+00B1:  BCF    03.7
+00B2:  BTFSC  45.0
+00B3:  BSF    03.7
+00B4:  MOVF   00,W
+00B5:  MOVWF  4A
+00B6:  MOVF   49,W
+00B7:  SUBLW  07
+00B8:  MOVWF  4B
+00B9:  MOVF   4A,W
+00BA:  MOVWF  77
+00BB:  MOVF   4B,W
+00BC:  MOVWF  78
+00BD:  BTFSC  03.2
+00BE:  GOTO   0C3
+00BF:  BCF    03.0
+00C0:  RRF    77,F
+00C1:  DECFSZ 78,F
+00C2:  GOTO   0BF
+00C3:  BTFSS  77.0
+00C4:  GOTO   0C7
+00C5:  BSF    46.0
+00C6:  GOTO   0C8
+00C7:  BCF    46.0
+....................             continue; 
+00C8:  GOTO   0E8
+....................          } 
+....................          crc_byte <<= 1; 
+00C9:  BCF    03.0
+00CA:  RLF    46,F
+....................          bit_test(*current_data, 7 - bit_counter) ? 
+....................             bit_set(crc_byte,0) : bit_clear(crc_byte,0); 
+00CB:  MOVF   45,W
+00CC:  MOVWF  7A
+00CD:  MOVF   44,W
+00CE:  MOVWF  04
+00CF:  BCF    03.7
+00D0:  BTFSC  45.0
+00D1:  BSF    03.7
+00D2:  MOVF   00,W
+00D3:  MOVWF  4A
+00D4:  MOVF   49,W
+00D5:  SUBLW  07
+00D6:  MOVWF  4B
+00D7:  MOVF   4A,W
+00D8:  MOVWF  77
+00D9:  MOVF   4B,W
+00DA:  MOVWF  78
+00DB:  BTFSC  03.2
+00DC:  GOTO   0E1
+00DD:  BCF    03.0
+00DE:  RRF    77,F
+00DF:  DECFSZ 78,F
+00E0:  GOTO   0DD
+00E1:  BTFSS  77.0
+00E2:  GOTO   0E5
+00E3:  BSF    46.0
+00E4:  GOTO   0E6
+00E5:  BCF    46.0
+....................          crc_byte ^= pattern; 
+00E6:  MOVF   43,W
+00E7:  XORWF  46,F
+00E8:  INCF   49,F
+00E9:  GOTO   0A5
+....................       } 
+....................       current_data++; 
+00EA:  INCF   44,F
+00EB:  BTFSC  03.2
+00EC:  INCF   45,F
+00ED:  INCF   47,F
+00EE:  BTFSC  03.2
+00EF:  INCF   48,F
+00F0:  GOTO   08F
+....................    } 
+....................    for(bit_counter=0; bit_counter < 8; bit_counter++) 
+00F1:  CLRF   49
+00F2:  MOVF   49,W
+00F3:  SUBLW  07
+00F4:  BTFSS  03.0
+00F5:  GOTO   101
+....................    { 
+....................       if(!bit_test(crc_byte,7)) 
+00F6:  BTFSC  46.7
+00F7:  GOTO   0FB
+....................       { 
+....................          crc_byte <<= 1; 
+00F8:  BCF    03.0
+00F9:  RLF    46,F
+....................          continue; 
+00FA:  GOTO   0FF
+....................       } 
+....................       crc_byte <<= 1; 
+00FB:  BCF    03.0
+00FC:  RLF    46,F
+....................       crc_byte ^= pattern; 
+00FD:  MOVF   43,W
+00FE:  XORWF  46,F
+00FF:  INCF   49,F
+0100:  GOTO   0F2
+....................    } 
+....................    return crc_byte; 
+0101:  MOVF   46,W
+0102:  MOVWF  78
+.................... } 
+....................  
+....................  
+.................... int16 generate_16bit_crc(char* data, int16 length, int16 pattern) 
+.................... { 
+....................    int   *current_data; 
+....................    int16 crc_Dbyte; 
+....................    int16 byte_counter; 
+....................    int   bit_counter; 
+....................  
+....................    current_data = data + 2; 
+....................    crc_Dbyte =  make16(data[0], data[1]); 
+....................  
+....................    for(byte_counter=0; byte_counter < (length-2); byte_counter++) 
+....................    { 
+....................       for(bit_counter=0; bit_counter < 8; bit_counter++) 
+....................       { 
+....................          if(!bit_test(crc_Dbyte,15)) 
+....................          { 
+....................             crc_Dbyte <<= 1; 
+....................             bit_test(*current_data, 7 - bit_counter) ? 
+....................                bit_set(crc_Dbyte,0) : bit_clear(crc_Dbyte,0); 
+....................             continue; 
+....................          } 
+....................          crc_Dbyte <<= 1; 
+....................          bit_test(*current_data, 7 - bit_counter) ? 
+....................             bit_set(crc_Dbyte,0) : bit_clear(crc_Dbyte,0); 
+....................          crc_Dbyte ^= pattern; 
+....................       } 
+....................       current_data++; 
+....................    } 
+....................  
+....................    for(bit_counter=0; bit_counter < 16; bit_counter++) 
+....................    { 
+....................       if(!bit_test(crc_Dbyte,15)) 
+....................       { 
+....................          crc_Dbyte <<= 1; 
+....................          continue; 
+....................       } 
+....................       crc_Dbyte <<= 1; 
+....................       crc_Dbyte ^= pattern; 
+....................    } 
+....................  
+....................    return crc_Dbyte; 
+.................... } 
+....................  
+.................... int32 generate_32bit_crc(char* data, int16 length, int32 pattern) 
+.................... { 
+....................    int   *current_data; 
+....................    int32 crc_Dbyte; 
+....................    int16 byte_counter; 
+....................    int   bit_counter; 
+....................  
+....................    current_data = data + 4; 
+....................    crc_Dbyte =  make32(data[0], data[1], data[2], data[3]); 
+....................  
+....................    for(byte_counter=0; byte_counter < (length-4); byte_counter++) 
+....................    { 
+....................       for(bit_counter=0; bit_counter < 8; bit_counter++) 
+....................       { 
+....................          if(!bit_test(crc_Dbyte,31)) 
+....................          { 
+....................          crc_Dbyte <<= 1; 
+....................          bit_test(*current_data, 7 - bit_counter) ? 
+....................             bit_set(crc_Dbyte,0) : bit_clear(crc_Dbyte,0); 
+....................             continue; 
+....................          } 
+....................          crc_Dbyte <<= 1; 
+....................          bit_test(*current_data, 7 - bit_counter) ? 
+....................             bit_set(crc_Dbyte,0) : bit_clear(crc_Dbyte,0); 
+....................          crc_Dbyte ^= pattern; 
+....................       } 
+....................       current_data++; 
+....................    } 
+....................  
+....................    for(bit_counter=0; bit_counter < 32; bit_counter++) 
+....................    { 
+....................       if(!bit_test(crc_Dbyte,31)) 
+....................       { 
+....................          crc_Dbyte <<= 1; 
+....................          continue; 
+....................       } 
+....................       crc_Dbyte <<= 1; 
+....................       crc_Dbyte ^= pattern; 
+....................    } 
+....................  
+....................    return crc_Dbyte; 
+.................... } 
+....................  
+.................... #fuses XT,NOWDT,NOPROTECT,NOBROWNOUT,NOLVP,NOPUT,NOWRT,NODEBUG,NOCPD 
+.................... #use delay (clock=4000000)  
+*
+0041:  MOVLW  3F
+0042:  MOVWF  04
+0043:  BCF    03.7
+0044:  MOVF   00,W
+0045:  BTFSC  03.2
+0046:  GOTO   055
+0047:  MOVLW  01
+0048:  MOVWF  78
+0049:  CLRF   77
+004A:  DECFSZ 77,F
+004B:  GOTO   04A
+004C:  DECFSZ 78,F
+004D:  GOTO   049
+004E:  MOVLW  4A
+004F:  MOVWF  77
+0050:  DECFSZ 77,F
+0051:  GOTO   050
+0052:  GOTO   053
+0053:  DECFSZ 00,F
+0054:  GOTO   047
+0055:  RETURN
+.................... #use rs232 (baud=9600, xmit=pin_C6, rcv=pin_C7, parity=N, stop=1) // RS232 protokolünün 9600 bit/sn baud hýzýnda olacaðýný ve 
+.................... #include <kbd.c>   // TX,RX uçlarýnýn hangi pinler olacaðýný tanýmlýyor 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////                             KBD.C                                 //// 
+.................... ////                  Generic keypad scan driver                       //// 
+.................... ////                                                                   //// 
+.................... ////  kbd_init()   Must be called before any other function.           //// 
+.................... ////                                                                   //// 
+.................... ////  c = kbd_getc(c)  Will return a key value if pressed or /0 if not //// 
+.................... ////                   This function should be called frequently so as //// 
+.................... ////                   not to miss a key press.                        //// 
+.................... ////                                                                   //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996,2003 Custom Computer Services           //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... ////////////////// The following defines the keypad layout on port D 
+....................  
+.................... // Un-comment the following define to use port B 
+.................... // #define use_portb_kbd TRUE 
+....................  
+.................... // Make sure the port used has pull-up resistors (or the LCD) on 
+.................... // the column pins 
+....................  
+.................... #if defined use_portb_kbd 
+....................    #byte kbd = getenv("SFR:PORTB") 
+.................... #else 
+....................    #byte kbd = getenv("SFR:PORTD") 
+.................... #endif 
+....................  
+.................... #if defined use_portb_kbd 
+....................    #define set_tris_kbd(x) set_tris_b(x) 
+.................... #else 
+....................    #define set_tris_kbd(x) set_tris_d(x) 
+.................... #endif 
+....................  
+.................... //Keypad connection:   (for example column 0 is B2) 
+.................... //                Bx: 
+....................  
+.................... #ifdef blue_keypad  ///////////////////////////////////// For the blue keypad 
+.................... #define COL0 (1 << 2) 
+.................... #define COL1 (1 << 3) 
+.................... #define COL2 (1 << 6) 
+....................  
+.................... #define ROW0 (1 << 4) 
+.................... #define ROW1 (1 << 7) 
+.................... #define ROW2 (1 << 1) 
+.................... #define ROW3 (1 << 5) 
+....................  
+.................... #else ////////////////////////////////////////////////// For the black keypad 
+.................... #define COL0 (1 << 5) 
+.................... #define COL1 (1 << 6) 
+.................... #define COL2 (1 << 7) 
+....................  
+.................... #define ROW0 (1 << 1) 
+.................... #define ROW1 (1 << 2) 
+.................... #define ROW2 (1 << 3) 
+.................... #define ROW3 (1 << 4) 
+....................  
+.................... #endif 
+....................  
+.................... #define ALL_ROWS (ROW0|ROW1|ROW2|ROW3) 
+.................... #define ALL_PINS (ALL_ROWS|COL0|COL1|COL2) 
+....................  
+.................... // Keypad layout: 
+.................... char const KEYS[4][3] = {{'1','2','3'}, 
+....................                          {'4','5','6'}, 
+....................                          {'7','8','9'}, 
+....................                          {'*','0','#'}}; 
+....................  
+.................... #define KBD_DEBOUNCE_FACTOR 33    // Set this number to apx n/333 where 
+....................                                   // n is the number of times you expect 
+....................                                   // to call kbd_getc each second 
+....................  
+....................  
+.................... void kbd_init() { 
+.................... } 
+....................  
+.................... char kbd_getc( ) { 
+....................    static BYTE kbd_call_count; 
+*
+01D3:  BCF    03.5
+01D4:  CLRF   27
+....................    static int1 kbd_down; 
+01D5:  BCF    28.0
+....................    static char last_key; 
+01D6:  CLRF   29
+....................    static BYTE col; 
+01D7:  CLRF   2A
+....................  
+....................    BYTE kchar; 
+....................    BYTE row; 
+....................  
+....................    kchar='\0'; 
+*
+0133:  CLRF   37
+....................    if(++kbd_call_count>KBD_DEBOUNCE_FACTOR) { 
+0134:  INCF   27,F
+0135:  MOVF   27,W
+0136:  SUBLW  21
+0137:  BTFSC  03.0
+0138:  GOTO   1B4
+....................        switch (col) { 
+0139:  MOVF   2A,W
+013A:  BTFSC  03.2
+013B:  GOTO   143
+013C:  XORLW  01
+013D:  BTFSC  03.2
+013E:  GOTO   149
+013F:  XORLW  03
+0140:  BTFSC  03.2
+0141:  GOTO   14F
+0142:  GOTO   154
+....................          case 0   : set_tris_kbd(ALL_PINS&~COL0); 
+0143:  MOVLW  DE
+0144:  BSF    03.5
+0145:  MOVWF  08
+....................                     kbd=~COL0&ALL_PINS; 
+0146:  BCF    03.5
+0147:  MOVWF  08
+....................                     break; 
+0148:  GOTO   154
+....................          case 1   : set_tris_kbd(ALL_PINS&~COL1); 
+0149:  MOVLW  BE
+014A:  BSF    03.5
+014B:  MOVWF  08
+....................                     kbd=~COL1&ALL_PINS; 
+014C:  BCF    03.5
+014D:  MOVWF  08
+....................                     break; 
+014E:  GOTO   154
+....................          case 2   : set_tris_kbd(ALL_PINS&~COL2); 
+014F:  MOVLW  7E
+0150:  BSF    03.5
+0151:  MOVWF  08
+....................                     kbd=~COL2&ALL_PINS; 
+0152:  BCF    03.5
+0153:  MOVWF  08
+....................                     break; 
+....................        } 
+....................  
+....................        if(kbd_down) { 
+0154:  BTFSS  28.0
+0155:  GOTO   160
+....................          if((kbd & (ALL_ROWS))==(ALL_ROWS)) { 
+0156:  MOVF   08,W
+0157:  ANDLW  1E
+0158:  SUBLW  1E
+0159:  BTFSS  03.2
+015A:  GOTO   15F
+....................            kbd_down=FALSE; 
+015B:  BCF    28.0
+....................            kchar=last_key; 
+015C:  MOVF   29,W
+015D:  MOVWF  37
+....................            last_key='\0'; 
+015E:  CLRF   29
+....................          } 
+....................        } else { 
+015F:  GOTO   1B3
+....................           if((kbd & (ALL_ROWS))!=(ALL_ROWS)) { 
+0160:  MOVF   08,W
+0161:  ANDLW  1E
+0162:  SUBLW  1E
+0163:  BTFSC  03.2
+0164:  GOTO   1AE
+....................              if((kbd & ROW0)==0) 
+0165:  MOVF   08,W
+0166:  ANDLW  02
+0167:  BTFSS  03.2
+0168:  GOTO   16B
+....................                row=0; 
+0169:  CLRF   38
+016A:  GOTO   17F
+....................              else if((kbd & ROW1)==0) 
+016B:  MOVF   08,W
+016C:  ANDLW  04
+016D:  BTFSS  03.2
+016E:  GOTO   172
+....................                row=1; 
+016F:  MOVLW  01
+0170:  MOVWF  38
+0171:  GOTO   17F
+....................              else if((kbd & ROW2)==0) 
+0172:  MOVF   08,W
+0173:  ANDLW  08
+0174:  BTFSS  03.2
+0175:  GOTO   179
+....................                row=2; 
+0176:  MOVLW  02
+0177:  MOVWF  38
+0178:  GOTO   17F
+....................              else if((kbd & ROW3)==0) 
+0179:  MOVF   08,W
+017A:  ANDLW  10
+017B:  BTFSS  03.2
+017C:  GOTO   17F
+....................                row=3; 
+017D:  MOVLW  03
+017E:  MOVWF  38
+....................              last_key =KEYS[row][col]; 
+017F:  MOVF   38,W
+0180:  MOVWF  39
+0181:  MOVLW  03
+0182:  MOVWF  3A
+*
+01A7:  MOVF   2A,W
+01A8:  ADDWF  78,W
+01A9:  CALL   031
+01AA:  MOVWF  78
+01AB:  MOVWF  29
+....................              kbd_down = TRUE; 
+01AC:  BSF    28.0
+....................           } else { 
+01AD:  GOTO   1B3
+....................              ++col; 
+01AE:  INCF   2A,F
+....................              if(col==3) 
+01AF:  MOVF   2A,W
+01B0:  SUBLW  03
+01B1:  BTFSC  03.2
+....................                col=0; 
+01B2:  CLRF   2A
+....................           } 
+....................        } 
+....................       kbd_call_count=0; 
+01B3:  CLRF   27
+....................    } 
+....................   set_tris_kbd(ALL_PINS); 
+01B4:  MOVLW  FE
+01B5:  BSF    03.5
+01B6:  MOVWF  08
+....................   return(kchar); 
+01B7:  BCF    03.5
+01B8:  MOVF   37,W
+01B9:  MOVWF  78
+01BA:  BCF    0A.3
+01BB:  BCF    0A.4
+01BC:  GOTO   1EA (RETURN)
+.................... } 
+....................  
+....................  
+.................... #define MASTER 0x01 
+.................... #define SLAVE1 0x02 
+.................... #define SLAVE2 0x03 
+.................... #define SLAVE3 0x04 
+.................... #define ACK 0x01 
+.................... #define NACK 0xFF 
+.................... #define BUFFER_SÝZE 64 
+....................  
+.................... #define enable pin_C4                                                                  
+....................  
+.................... char   i,buffer[6];  // klavye isminde 80 üyeli bir dizi tanýmlanýyor 
+.................... char num=48,k,crc; 
+.................... int a=4; 
+.................... #int_RDA  
+.................... void seri() 
+.................... { 
+....................    char t1,t2,t3; 
+....................     
+....................    t1 = getc(); 
+*
+0056:  BTFSS  0C.5
+0057:  GOTO   056
+0058:  MOVF   1A,W
+0059:  MOVWF  3B
+....................    if(t1==MASTER) 
+005A:  DECFSZ 3B,W
+005B:  GOTO   12F
+....................    { 
+....................       t2=getc(); 
+005C:  BTFSS  0C.5
+005D:  GOTO   05C
+005E:  MOVF   1A,W
+005F:  MOVWF  3C
+....................       t3 = getc(); 
+0060:  BTFSS  0C.5
+0061:  GOTO   060
+0062:  MOVF   1A,W
+0063:  MOVWF  3D
+....................   
+....................       if(t2==SLAVE1 && t3 == 'D') 
+0064:  MOVF   3C,W
+0065:  SUBLW  02
+0066:  BTFSS  03.2
+0067:  GOTO   12F
+0068:  MOVF   3D,W
+0069:  SUBLW  44
+006A:  BTFSS  03.2
+006B:  GOTO   12F
+....................       { 
+....................       buffer[0]=MASTER; 
+006C:  MOVLW  01
+006D:  MOVWF  2C
+....................       buffer[1]=SLAVE1; 
+006E:  MOVLW  02
+006F:  MOVWF  2D
+....................       buffer[2]=ACK; 
+0070:  MOVLW  01
+0071:  MOVWF  2E
+....................       buffer[3]=1; 
+0072:  MOVWF  2F
+....................       buffer[4]=num; 
+0073:  MOVF   32,W
+0074:  MOVWF  30
+....................       crc=generate_8bit_crc(buffer,5,0x55); 
+0075:  CLRF   40
+0076:  MOVLW  2C
+0077:  MOVWF  3F
+0078:  CLRF   42
+0079:  MOVLW  05
+007A:  MOVWF  41
+007B:  MOVLW  55
+007C:  MOVWF  43
+*
+0103:  MOVF   78,W
+0104:  MOVWF  34
+....................       buffer[5]=crc; 
+0105:  MOVF   34,W
+0106:  MOVWF  31
+....................             delay_ms(10); 
+0107:  MOVLW  0A
+0108:  MOVWF  3F
+0109:  CALL   041
+....................             output_high(enable); 
+010A:  BCF    36.4
+010B:  MOVF   36,W
+010C:  BSF    03.5
+010D:  MOVWF  07
+010E:  BCF    03.5
+010F:  BSF    07.4
+....................             delay_ms(1); 
+0110:  MOVLW  01
+0111:  MOVWF  3F
+0112:  CALL   041
+....................             for(int i=0;i<6;i++){ 
+0113:  CLRF   3E
+0114:  MOVF   3E,W
+0115:  SUBLW  05
+0116:  BTFSS  03.0
+0117:  GOTO   124
+....................              putc(buffer[i]); 
+0118:  MOVLW  2C
+0119:  ADDWF  3E,W
+011A:  MOVWF  04
+011B:  BCF    03.7
+011C:  MOVF   00,W
+011D:  MOVWF  3F
+011E:  MOVF   3F,W
+011F:  BTFSS  0C.4
+0120:  GOTO   11F
+0121:  MOVWF  19
+0122:  INCF   3E,F
+0123:  GOTO   114
+....................             } 
+....................             delay_ms(10); 
+0124:  MOVLW  0A
+0125:  MOVWF  3F
+0126:  CALL   041
+....................             output_low(enable); 
+0127:  BCF    36.4
+0128:  MOVF   36,W
+0129:  BSF    03.5
+012A:  MOVWF  07
+012B:  BCF    03.5
+012C:  BCF    07.4
+....................             num=48; 
+012D:  MOVLW  30
+012E:  MOVWF  32
+....................          } 
+....................    } 
+012F:  BCF    0C.5
+0130:  BCF    0A.3
+0131:  BCF    0A.4
+0132:  GOTO   01D
+.................... } 
+....................  
+.................... void main() 
+*
+01BD:  MOVLW  19
+01BE:  BSF    03.5
+01BF:  MOVWF  19
+01C0:  MOVLW  A6
+01C1:  MOVWF  18
+01C2:  MOVLW  90
+01C3:  BCF    03.5
+01C4:  MOVWF  18
+01C5:  MOVLW  30
+01C6:  MOVWF  32
+01C7:  MOVLW  04
+01C8:  MOVWF  35
+01C9:  MOVLW  FF
+01CA:  MOVWF  36
+01CB:  BSF    03.5
+01CC:  BSF    1F.0
+01CD:  BSF    1F.1
+01CE:  BSF    1F.2
+01CF:  BCF    1F.3
+01D0:  BCF    03.7
+01D1:  MOVLW  1F
+01D2:  ANDWF  03,F
+.................... { 
+....................    set_tris_d(0xF0); 
+*
+01D8:  MOVLW  F0
+01D9:  BSF    03.5
+01DA:  MOVWF  08
+....................    output_b(0); 
+01DB:  CLRF   06
+01DC:  BCF    03.5
+01DD:  CLRF   06
+....................     
+....................    output_low(enable); 
+01DE:  BCF    36.4
+01DF:  MOVF   36,W
+01E0:  BSF    03.5
+01E1:  MOVWF  07
+01E2:  BCF    03.5
+01E3:  BCF    07.4
+....................    enable_interrupts(GLOBAL); 
+01E4:  MOVLW  C0
+01E5:  IORWF  0B,F
+....................    enable_interrupts(INT_RDA); 
+01E6:  BSF    03.5
+01E7:  BSF    0C.5
+....................    while(TRUE) 
+....................    { 
+....................     k = kbd_getc();   
+01E8:  BCF    03.5
+01E9:  GOTO   133
+01EA:  MOVF   78,W
+01EB:  MOVWF  33
+....................     if(k!=0){ 
+01EC:  MOVF   33,F
+01ED:  BTFSC  03.2
+01EE:  GOTO   1F7
+....................       output_toggle(pin_b2); 
+01EF:  BSF    03.5
+01F0:  BCF    06.2
+01F1:  MOVLW  04
+01F2:  BCF    03.5
+01F3:  XORWF  06,F
+....................       num=k; 
+01F4:  MOVF   33,W
+01F5:  MOVWF  32
+....................       k=0; 
+01F6:  CLRF   33
+....................     } 
+01F7:  GOTO   1E9
+....................    } 
+....................  
+.................... } 
+01F8:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F39   XT NOWDT NOPUT NOBROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

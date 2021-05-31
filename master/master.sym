@@ -1,0 +1,200 @@
+004-005 @READ_PROGRAM_MEMORY8.P1
+004-005 @WRITE_PROGRAM_MEMORY8.P2
+006     lcdlat
+006     lcd
+008     PSP_DATA
+015     CCP_1
+015     CCP_1_LOW
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B     CCP_2
+01C     CCP_2_HIGH
+020     @INTERRUPT_AREA
+021     @INTERRUPT_AREA
+022     @INTERRUPT_AREA
+023     @INTERRUPT_AREA
+024     @INTERRUPT_AREA
+025     @INTERRUPT_AREA
+026     @INTERRUPT_AREA
+027     @INTERRUPT_AREA
+028     rs232_errors
+029     data1
+02A     data2
+02B     crc
+02C-031 buffer
+032-037 send_buffer
+038     ekran
+039     bilgi
+03A     x
+03B     y
+03C     z
+03D     t
+03E     a
+03F     @TRIS_C
+040     @PSTRINGCN7_669.P1
+040     @PRINTF_D_669.P2
+040     lcd_init.i
+040     data_gonder.data_send
+040     @MUL88.P1
+040     lcd_yazi.@SCRATCH1
+040     @PSTRINGC7_669.@SCRATCH1
+040     data_istek.@SCRATCH1
+040     data_motor.@SCRATCH1
+041     @MUL88.P1
+041     @PRINTF_D_669.P2
+041     data_gonder.i
+041     lcd_init.@SCRATCH1
+041     @PSTRINGC7_669.@SCRATCH2
+041     @PSTRINGC_669.@SCRATCH1
+041     @PSTRINGCN7_669.@SCRATCH1
+042     @PSTRINGC7_669.@SCRATCH3
+042     @PSTRINGC_669.@SCRATCH2
+042     @PSTRINGCN7_669.@SCRATCH2
+042     @PRINTF_D_669.@SCRATCH1
+042     data_gonder.@SCRATCH1
+043     @PSTRINGC7_669.@SCRATCH4
+043     @PSTRINGCN7_669.@SCRATCH3
+043     @PRINTF_D_669.@SCRATCH2
+044     @PSTRINGCN7_669.@SCRATCH4
+044     @PRINTF_D_669.@SCRATCH3
+045     @PRINTF_D_669.@SCRATCH4
+046     lcd_putc.c
+046     @DIV88.P1
+047     lcd_gotoxy.x
+047     @DIV88.P1
+047     @delay_ms1.P2
+048     lcd_gotoxy.y
+048     @DIV88.@SCRATCH1
+049     lcd_gotoxy.address
+04A     lcd_gotoxy.@SCRATCH1
+04B     lcd_send_byte.address
+04C     lcd_send_byte.n
+04D     lcd_read_byte.low
+04D     lcd_send_byte.@SCRATCH1
+04E     lcd_read_byte.high
+04E     lcd_send_nibble.n
+04F     lcd_read_byte.@SCRATCH1
+050-051 generate_8bit_crc.data
+050     @GETCH_BIU_1.@SCRATCH1
+050     seri.@SCRATCH1
+052-053 generate_8bit_crc.length
+054     generate_8bit_crc.pattern
+055-056 generate_8bit_crc.current_data
+057     generate_8bit_crc.crc_byte
+058-059 generate_8bit_crc.byte_counter
+05A     generate_8bit_crc.bit_counter
+05B     generate_8bit_crc.@SCRATCH1
+05C     generate_8bit_crc.@SCRATCH2
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07F     @INTERRUPT_AREA
+086     lcdtris
+0FF     @INTERRUPT_AREA
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+17F     @INTERRUPT_AREA
+1FF     @INTERRUPT_AREA
+27F     @INTERRUPT_AREA
+2FF     @INTERRUPT_AREA
+37F     @INTERRUPT_AREA
+3FF     @INTERRUPT_AREA
+47F     @INTERRUPT_AREA
+4FF     @INTERRUPT_AREA
+57F     @INTERRUPT_AREA
+5FF     @INTERRUPT_AREA
+67F     @INTERRUPT_AREA
+6FF     @INTERRUPT_AREA
+77F     @INTERRUPT_AREA
+7FF     @INTERRUPT_AREA
+87F     @INTERRUPT_AREA
+8FF     @INTERRUPT_AREA
+97F     @INTERRUPT_AREA
+9FF     @INTERRUPT_AREA
+A7F     @INTERRUPT_AREA
+AFF     @INTERRUPT_AREA
+B7F     @INTERRUPT_AREA
+BFF     @INTERRUPT_AREA
+C7F     @INTERRUPT_AREA
+CFF     @INTERRUPT_AREA
+D7F     @INTERRUPT_AREA
+DFF     @INTERRUPT_AREA
+E7F     @INTERRUPT_AREA
+EFF     @INTERRUPT_AREA
+F7F     @INTERRUPT_AREA
+FFF     @INTERRUPT_AREA
+
+ROM Allocation:
+000031  LCD_INIT_STRING.call
+000035  LCD_INIT_STRING.data
+000039  pinnum.call
+000039  pinnum.data
+000055  @GETCH_BIU_1
+00006C  generate_8bit_crc
+0000F3  seri
+000142  @const701.call
+000149  @const703.call
+000151  @const705.call
+000157  @const711.call
+00015B  @const712.call
+000161  @const722.call
+000164  @const723.call
+00016B  @const725.call
+00016E  @const726.call
+000175  @delay_ms1
+00018A  lcd_send_nibble
+000196  lcd_read_nibble
+00019C  lcd_send_byte
+0001A2  lcd_read_byte
+0001DC  lcd_init
+00020F  lcd_gotoxy
+000221  lcd_putc
+00024D  @PSTRINGC7_669
+000298  @DIV88
+0002AD  lcd_yazi
+0002FB  @MUL88
+00032C  @PSTRINGC_669
+000375  @PSTRINGCN7_669
+0003CC  @PRINTF_D_669
+000463  data_istek
+0004AF  data_gonder
+0004F0  data_motor
+00055F  @cinit1
+00055F  MAIN
+000577  @cinit2
+
+Project Directory:
+    D:\Yavuzhan\Dersler\Haberleþme\Proje\CCS\rs485\master\
+
+Project Files:
+    master.c                                                [20-May-21 19:01  CRC=FDEFBEBB]
+    C:\Program Files (x86)\PICC\Devices\16f877.h            [21-Haz-13 16:04  CRC=A355A189]
+    C:\Program Files (x86)\PICC\Drivers\crc.c               [23-Haz-03 14:53  CRC=3B474D2F]
+    C:\Program Files (x86)\PICC\Drivers\lcd.c               [23-Aðu-12 09:01  CRC=D28E8746]
+
+Source signature=81A9BBFF
+
+Units:
+    master (main)
+
+Compiler Settings:
+    Processor:      PIC16F877
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    XREF file:   master.xsym
+    Errors:      master.err
+    Ext Symbols: master.esym
+    INHX8:       master.hex
+    Symbols:     master.sym
+    List:        master.lst
+    Debug/COFF:  master.cof
+    Project:     master.ccspjt
+    Call Tree:   master.tre
+    Statistics:  master.STA

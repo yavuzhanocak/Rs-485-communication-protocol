@@ -1,0 +1,8 @@
+>>> Warning 230 "slavemotor.c" Line 35(31,32): String truncated
+>>> Warning 203 "slavemotor.c" Line 122(1,1): Condition always TRUE
+>>> Warning 216 "slavemotor.c" Line 127(1,2): Interrupts disabled during call to prevent re-entrancy:  (@PSTRINGC7_9600_62_63)
+>>> Warning 202 "slavemotor.c" Line 33(15,20): Variable never used:   data2
+>>> Warning 202 "slavemotor.c" Line 33(35,42): Variable never used:   crcdata
+      Memory usage:   ROM=12%      RAM=9% - 14%
+      0 Errors,  5 Warnings.
+Build Successful.

@@ -1,0 +1,208 @@
+004-005 @READ_PROGRAM_MEMORY8.P1
+004-005 @WRITE_PROGRAM_MEMORY8.P2
+006     lcd
+006     lcdlat
+008     PSP_DATA
+015     CCP_1_LOW
+015     CCP_1
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B     CCP_2
+01C     CCP_2_HIGH
+020     @INTERRUPT_AREA
+021     @INTERRUPT_AREA
+022     @INTERRUPT_AREA
+023     @INTERRUPT_AREA
+024     @INTERRUPT_AREA
+025     @INTERRUPT_AREA
+026     @INTERRUPT_AREA
+027     @INTERRUPT_AREA
+028-029 strtok.save
+02A-02D _Randseed
+02E     i
+02F-034 buffer
+035     num
+036     crc
+037-038 bilgi
+039-03C voltaj
+03D     sicaklik
+03E     @TRIS_C
+03F-042 sayi
+043-046 @SFTOI.P1
+043-046 @DIVFF.P2
+043     lcd_init.i
+043     @PRINTF_D_937.P1
+043-044 @ITOF.P2
+043     sicaklik_oku.@SCRATCH1
+043     @PSTRINGC_937.@SCRATCH1
+044     @PRINTF_D_937.P1
+044     lcd_init.@SCRATCH1
+044     sicaklik_oku.@SCRATCH2
+044     @PSTRINGC_937.@SCRATCH2
+045     sicaklik_oku.@SCRATCH3
+045     @PRINTF_D_937.@SCRATCH1
+046     sicaklik_oku.@SCRATCH4
+046     @PRINTF_D_937.@SCRATCH2
+047-04A @MULFF.P1
+047-04A @ADDFF.P2
+047-04A @DIVFF.P3
+047     @PRINTF_D_937.@SCRATCH3
+048     @PRINTF_D_937.@SCRATCH4
+049     @DIV88.P1
+049     lcd_putc.c
+04A     lcd_gotoxy.x
+04A     @DIV88.P1
+04B     lcd_gotoxy.y
+04B-04E @ADDFF.P1
+04B-04E @MULFF.P2
+04B     @DIVFF.@SCRATCH1
+04B     @DIV88.@SCRATCH1
+04C     lcd_gotoxy.address
+04C     @DIVFF.@SCRATCH2
+04D     @DIVFF.@SCRATCH3
+04D     lcd_gotoxy.@SCRATCH1
+04E     lcd_send_byte.address
+04E     @DIVFF.@SCRATCH4
+04F     lcd_send_byte.n
+04F     @MULFF.@SCRATCH1
+04F     @ADDFF.@SCRATCH1
+04F     @DIVFF.@SCRATCH5
+050     lcd_read_byte.low
+050     @MULFF.@SCRATCH2
+050     @ADDFF.@SCRATCH2
+050     @DIVFF.@SCRATCH6
+050     lcd_send_byte.@SCRATCH1
+051     lcd_send_nibble.n
+051     lcd_read_byte.high
+051     @MULFF.@SCRATCH3
+051     @ADDFF.@SCRATCH3
+052     @MULFF.@SCRATCH4
+052     @ADDFF.@SCRATCH4
+052     lcd_read_byte.@SCRATCH1
+053     @MULFF.@SCRATCH5
+053     @ADDFF.@SCRATCH5
+054     @ADDFF.@SCRATCH6
+055     @ADDFF.@SCRATCH7
+056     @ADDFF.@SCRATCH8
+057     seri.t1
+058     seri.t2
+059     seri.t3
+05A     seri.i
+05B-05C generate_8bit_crc.data
+05B     @delay_ms1.P1
+05B     seri.@SCRATCH1
+05D-05E generate_8bit_crc.length
+05F     generate_8bit_crc.pattern
+060-061 generate_8bit_crc.current_data
+062     generate_8bit_crc.crc_byte
+063-064 generate_8bit_crc.byte_counter
+065     generate_8bit_crc.bit_counter
+066     generate_8bit_crc.@SCRATCH1
+067     generate_8bit_crc.@SCRATCH2
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07F     @INTERRUPT_AREA
+086     lcdtris
+0FF     @INTERRUPT_AREA
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+17F     @INTERRUPT_AREA
+1FF     @INTERRUPT_AREA
+27F     @INTERRUPT_AREA
+2FF     @INTERRUPT_AREA
+37F     @INTERRUPT_AREA
+3FF     @INTERRUPT_AREA
+47F     @INTERRUPT_AREA
+4FF     @INTERRUPT_AREA
+57F     @INTERRUPT_AREA
+5FF     @INTERRUPT_AREA
+67F     @INTERRUPT_AREA
+6FF     @INTERRUPT_AREA
+77F     @INTERRUPT_AREA
+7FF     @INTERRUPT_AREA
+87F     @INTERRUPT_AREA
+8FF     @INTERRUPT_AREA
+97F     @INTERRUPT_AREA
+9FF     @INTERRUPT_AREA
+A7F     @INTERRUPT_AREA
+AFF     @INTERRUPT_AREA
+B7F     @INTERRUPT_AREA
+BFF     @INTERRUPT_AREA
+C7F     @INTERRUPT_AREA
+CFF     @INTERRUPT_AREA
+D7F     @INTERRUPT_AREA
+DFF     @INTERRUPT_AREA
+E7F     @INTERRUPT_AREA
+EFF     @INTERRUPT_AREA
+F7F     @INTERRUPT_AREA
+FFF     @INTERRUPT_AREA
+
+ROM Allocation:
+000031  LCD_INIT_STRING.call
+000035  LCD_INIT_STRING.data
+000039  @delay_ms1
+00004E  seri
+000075  generate_8bit_crc
+00012D  @const979.call
+00013E  lcd_send_nibble
+00014A  lcd_read_nibble
+000150  lcd_send_byte
+000156  lcd_read_byte
+000190  lcd_init
+0001D5  lcd_gotoxy
+0001E7  lcd_putc
+000219  @PSTRINGC_937
+000240  @MULFF
+0002B5  @DIV88
+0002CA  sicaklik_oku
+0002D7  @ITOF
+00032F  @DIVFF
+00040E  @ADDFF
+000556  @SFTOI
+00057F  @PRINTF_D_937
+0005D8  @cinit1
+0005D8  MAIN
+0005E9  @cinit2
+0136  StrtoulGO
+0136  StrtolGO
+
+Project Directory:
+    D:\Yavuzhan\Dersler\Haberleþme\Proje\CCS\rs485\slave2\
+
+Project Files:
+    LM35.c                                                  [17-May-21 22:35  CRC=A621E3E0]
+    C:\Program Files (x86)\PICC\Devices\16f877.h            [21-Haz-13 16:04  CRC=A355A189]
+    C:\Program Files (x86)\PICC\Drivers\crc.c               [23-Haz-03 14:53  CRC=3B474D2F]
+    C:\Program Files (x86)\PICC\Drivers\string.h            [14-Tem-11 10:13  CRC=23EDEC8F]
+    C:\Program Files (x86)\PICC\Drivers\stddef.h            [16-Tem-10 09:27  CRC=897CEC6C]
+    C:\Program Files (x86)\PICC\Drivers\ctype.h             [03-Oca-08 13:55  CRC=2D1F019F]
+    C:\Program Files (x86)\PICC\Drivers\stdlib.h            [08-Haz-11 14:39  CRC=0B6669CF]
+    C:\Program Files (x86)\PICC\Drivers\lcd.c               [23-Aðu-12 09:01  CRC=D28E8746]
+
+Source signature=0FCC258D
+
+Units:
+    LM35 (main)
+
+Compiler Settings:
+    Processor:      PIC16F877
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    XREF file:   LM35.xsym
+    Errors:      LM35.err
+    Ext Symbols: LM35.esym
+    INHX8:       LM35.hex
+    Symbols:     LM35.sym
+    List:        LM35.lst
+    Debug/COFF:  LM35.cof
+    Project:     LM35.ccspjt
+    Call Tree:   LM35.tre
+    Statistics:  LM35.STA

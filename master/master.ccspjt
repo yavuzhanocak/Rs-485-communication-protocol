@@ -1,0 +1,25 @@
+[PROJECT]
+Target=master.hex
+Processor_Text=PIC16F877
+CCSVerions=5.007
+Compiler=PCM
+CCSVersion=5.007
+[Target Data]
+FileList=master.c
+[Directories]
+Include=C:\Program Files (x86)\PICC\Devices\;C:\Program Files (x86)\PICC\Drivers\
+[D:\Yavuzhan\Dersler\Haberleþme\Proje\CCS\rs485\master\master]
+Type=4
+[mru-list]
+1=master.c
+[Opened Files]
+1=master.c
+2=
+3=..\slave2\LM35.c
+4=..\slave3\slavemotor.c
+5=
+[master.c]
+Type=4
+[Units]
+Count=1
+1=master (main)

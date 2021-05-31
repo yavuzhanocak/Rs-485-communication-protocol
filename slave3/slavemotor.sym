@@ -1,0 +1,174 @@
+004-005 @WRITE_PROGRAM_MEMORY8.P1
+004-005 @READ_PROGRAM_MEMORY8.P2
+006     lcd
+006     lcdlat
+008     PSP_DATA
+015     CCP_1
+015     CCP_1_LOW
+016     CCP_1_HIGH
+01B     CCP_2
+01B     CCP_2_LOW
+01C     CCP_2_HIGH
+020     @INTERRUPT_AREA
+021     @INTERRUPT_AREA
+022     @INTERRUPT_AREA
+023     @INTERRUPT_AREA
+024     @INTERRUPT_AREA
+025     @INTERRUPT_AREA
+026     @INTERRUPT_AREA
+027     @INTERRUPT_AREA
+028     sayac
+029     duty
+02A     gecikme
+02B     x
+02C     data1
+02D     data2
+02E     crc
+02F-034 buffer
+035     crcdata
+036     y
+037-03B miktar
+03C     @TRIS_C
+041     com_set.i
+041-042 generate_8bit_crc.data
+041     seri.@SCRATCH1
+041     kesme.@SCRATCH1
+042     com_set.t
+042     @WRITEBITA.P1
+042     seri.@SCRATCH2
+043-044 generate_8bit_crc.length
+043     @MUL88.P1
+043     @delay_ms1.P2
+043     @WRITEBITA.P3
+043     com_set.@SCRATCH1
+043     @PSTRINGC_9600_62_63.@SCRATCH1
+043     @PSTRINGC7_9600_62_63.@SCRATCH1
+043     seri.@SCRATCH3
+044     @PRINTF_D_9600_62_63.P1
+044     @MUL88.P2
+044-045 @WRITEBITA.P3
+044     @PSTRINGCN7_9600_62_63.P4
+044     @PSTRINGC_9600_62_63.@SCRATCH2
+044     @PSTRINGC7_9600_62_63.@SCRATCH2
+045     @PRINTF_D_9600_62_63.P1
+045     generate_8bit_crc.pattern
+045     @PSTRINGCN7_9600_62_63.@SCRATCH1
+045     @PSTRINGC7_9600_62_63.@SCRATCH3
+046-047 generate_8bit_crc.current_data
+046     @PRINTF_D_9600_62_63.@SCRATCH1
+046     @PSTRINGCN7_9600_62_63.@SCRATCH2
+046     @PSTRINGC7_9600_62_63.@SCRATCH4
+047     @PRINTF_D_9600_62_63.@SCRATCH2
+047     @PSTRINGCN7_9600_62_63.@SCRATCH3
+048     generate_8bit_crc.crc_byte
+048     @PRINTF_D_9600_62_63.@SCRATCH3
+048     @PSTRINGCN7_9600_62_63.@SCRATCH4
+049-04A generate_8bit_crc.byte_counter
+049     @PRINTF_D_9600_62_63.@SCRATCH4
+04A     @DIV88.P1
+04B     @DIV88.P1
+04B     generate_8bit_crc.bit_counter
+04C     generate_8bit_crc.@SCRATCH1
+04C     @DIV88.@SCRATCH1
+04D     generate_8bit_crc.@SCRATCH2
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07F     @INTERRUPT_AREA
+086     lcdtris
+0FF     @INTERRUPT_AREA
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+17F     @INTERRUPT_AREA
+1FF     @INTERRUPT_AREA
+27F     @INTERRUPT_AREA
+2FF     @INTERRUPT_AREA
+37F     @INTERRUPT_AREA
+3FF     @INTERRUPT_AREA
+47F     @INTERRUPT_AREA
+4FF     @INTERRUPT_AREA
+57F     @INTERRUPT_AREA
+5FF     @INTERRUPT_AREA
+67F     @INTERRUPT_AREA
+6FF     @INTERRUPT_AREA
+77F     @INTERRUPT_AREA
+7FF     @INTERRUPT_AREA
+87F     @INTERRUPT_AREA
+8FF     @INTERRUPT_AREA
+97F     @INTERRUPT_AREA
+9FF     @INTERRUPT_AREA
+A7F     @INTERRUPT_AREA
+AFF     @INTERRUPT_AREA
+B7F     @INTERRUPT_AREA
+BFF     @INTERRUPT_AREA
+C7F     @INTERRUPT_AREA
+CFF     @INTERRUPT_AREA
+D7F     @INTERRUPT_AREA
+DFF     @INTERRUPT_AREA
+E7F     @INTERRUPT_AREA
+EFF     @INTERRUPT_AREA
+F7F     @INTERRUPT_AREA
+FFF     @INTERRUPT_AREA
+
+ROM Allocation:
+000038  pinnum.call
+00003C  pinnum.data
+000041  urun.call
+000045  urun.data
+000058  size.call
+00005C  size.data
+000060  @const702.call
+000077  @const710.call
+00007C  @const719.call
+000086  @delay_ms1
+00009B  @DIV88
+0000B0  @PSTRINGC7_9600_62_63
+0000FD  seri
+000121  generate_8bit_crc
+0001C6  com_set
+0001D7  @PSTRINGC_9600_62_63
+00020F  @MUL88
+00024A  @PRINTF_D_9600_62_63
+0002AD  @PSTRINGCN7_9600_62_63
+000332  @WRITEBITA
+000352  kesme
+00038C  @const730.call
+000396  MAIN
+000396  @cinit1
+0003AB  @cinit2
+
+Project Directory:
+    D:\Yavuzhan\Dersler\Haberleþme\Proje\CCS\rs485\slave3\
+
+Project Files:
+    slavemotor.c                                            [20-May-21 18:58  CRC=6D6A9313]
+    C:\Program Files (x86)\PICC\Devices\16f877.h            [21-Haz-13 16:04  CRC=A355A189]
+    C:\Program Files (x86)\PICC\Drivers\crc.c               [23-Haz-03 14:53  CRC=3B474D2F]
+    C:\Program Files (x86)\PICC\Drivers\lcd.c               [23-Aðu-12 09:01  CRC=D28E8746]
+
+Source signature=F1249057
+
+Units:
+    slavemotor (main)
+
+Compiler Settings:
+    Processor:      PIC16F877
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    XREF file:   slavemotor.xsym
+    Errors:      slavemotor.err
+    Ext Symbols: slavemotor.esym
+    INHX8:       slavemotor.hex
+    Symbols:     slavemotor.sym
+    List:        slavemotor.lst
+    Debug/COFF:  slavemotor.cof
+    Project:     slavemotor.ccspjt
+    Call Tree:   slavemotor.tre
+    Statistics:  slavemotor.STA

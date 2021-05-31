@@ -1,0 +1,69 @@
+
+ROM used:   1019/8192 (12%)
+            1019/8192 (12%) including unused fragments
+
+            0.7 Average locations per line
+            4.4 Average locations per statement
+
+RAM used:   34/368 (9%) at main() level
+            51/368 (14%) worst case
+
+Stack used: 1 worst case (0 in main + 1 for interrupts)
+Stack size: 8
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  129    73  32  slavemotor.c
+  629     0   0  C:\Program Files (x86)\PICC\Devices\16f877.h
+  154    72  31  C:\Program Files (x86)\PICC\Drivers\crc.c
+  456    84  37  C:\Program Files (x86)\PICC\Drivers\lcd.c
+----- -----
+ 1368   229 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+ Inline        13  1104  9.3  generate_8bit_crc
+0     21   2    1             @delay_ms1
+0      9   1    0             @const689
+0     23   2    0             @const692
+0      8   1    0             @const696
+ Inline         1   490  4.8  com_set
+0     23   2    0             @const702
+ Inline         2             @PSTRINGC_9600_62_63
+ Inline         2             @MUL88
+0      5   0    0             @const710
+0     21   2    3             @DIV88
+ Inline         6             @PRINTF_D_9600_62_63
+ Inline         5             @PSTRINGCN7_9600_62_63
+0     10   1    0             @const719
+0     77   8    4             @PSTRINGC7_9600_62_63
+0    565  55    3   854  5.8  seri
+0     58   6    1   295  3.7  kesme
+0     32   3    6             @WRITEBITA
+0    101  10    0   552  4.2  MAIN
+0     10   1    0             @const730
+ Inline         0             @cinit1
+
+Program metrics:
+    Functions               5
+    Statements              229
+    Comments                271
+    Volume (V)              4555
+    Difficulty (D)          26.0
+    Effort to implement (E) 118496
+    Time to implement (T)   1 hours, 50 minutes
+    Est Delivered Bugs (B)  1
+    Cyclomatic Complexity   18
+    Maintainability (MI)    27
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00003     4  0  
+00004-00037    52  0  
+00038-007FF   963  1029  
+00800-00FFF     0  2048  
+01000-017FF     0  2048  
+01800-01FFF     0  2048  
+
+
+
