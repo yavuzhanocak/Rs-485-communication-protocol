@@ -26,6 +26,17 @@ The system consists of 1 master and 3 slaves. Running the communication framewor
 //
 
 ```
+**Address information:**
+```
+
+#define MASTER 0x01
+#define SLAVE1 0x02
+#define SLAVE2 0x03
+#define SLAVE3 0x04
+#define ACK 0x01
+#define NACK 0xFF
+
+```
 
 **Package building structure:**
 ```
