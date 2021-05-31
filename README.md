@@ -18,3 +18,5 @@ The selected product provides motor control within the information coming from t
 ![slave-3](https://user-images.githubusercontent.com/62069736/120207411-0d78ae00-c235-11eb-9dbe-510ee76bf351.PNG)
 ### Proteus schematic drawing:  <br/>
 ![Otomat](https://user-images.githubusercontent.com/62069736/120207788-84ae4200-c235-11eb-8dd8-b8f2ec801f51.png)
+### Docklight screen output: <br/>
+![a](https://user-images.githubusercontent.com/62069736/120208492-35b4dc80-c236-11eb-8f8e-1cbe7f12e4b9.png)
