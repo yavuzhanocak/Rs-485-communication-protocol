@@ -15,3 +15,5 @@ Slave-2 measures the ambient temperature momentarily via lm35. If the common tem
 ### Slave-3: <br/>
 The selected product provides motor control within the information coming from the slave-3 master. 4 servo motors are used for 4 products. DC motor is used to reduce the ambient temperature. Compim output is provided via slave-3. 
 ![slave-3](https://user-images.githubusercontent.com/62069736/120207411-0d78ae00-c235-11eb-9dbe-510ee76bf351.PNG)
+### Proteus schematic drawing:  <br/>
+![Otomat](https://user-images.githubusercontent.com/62069736/120207788-84ae4200-c235-11eb-8dd8-b8f2ec801f51.png)
