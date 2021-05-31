@@ -16,5 +16,5 @@ An input is requested from the user via the numpad connected to Slave-1. Numpad 
 ### Slave-2
 Slave-2 measures the ambient temperature momentarily via lm35. If the common temperature rises above 40 degrees, the temperature information is sent to the master. 
 <p align="center"> 
-<img src="https://user-images.githubusercontent.com/62069736/120203603-8fb2a380-c230-11eb-93fe-5ff3b44aeffd.PNG">
+<img src="https://user-images.githubusercontent.com/62069736/120204535-9c83c700-c231-11eb-9ac1-193baa51db7d.PNG">
 </p>
