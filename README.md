@@ -9,3 +9,8 @@ The system consists of 1 master and 3 slaves. Running the communication framewor
 ### Slave-1:
 An input is requested from the user via the numpad connected to Slave-1. Numpad sends '0' character by default. The product code is transmitted to the master within the user login. If you want to login as administrator, enter   the starting'*' and '1', '2', '3' password and end with the '#' character and send the entered password to the master. 
 ![slave-1](https://user-images.githubusercontent.com/62069736/120202863-c63bee80-c22f-11eb-8170-5aaa40b65ccd.PNG)
+### Slave-2
+Slave-2 measures the ambient temperature momentarily via lm35. If the common temperature rises above 40 degrees, the temperature information is sent to the master. 
+<p align="center"> 
+<img src="https://user-images.githubusercontent.com/62069736/120203603-8fb2a380-c230-11eb-93fe-5ff3b44aeffd.PNG">
+</p>
