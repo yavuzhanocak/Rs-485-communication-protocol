@@ -25,7 +25,7 @@
 #define SLAVE3 0x04
 #define ACK 0x01
 #define NACK 0xFF
-#define BUFFER_S�ZE 8
+#define BUFFER_S�ZE 12
 
 #define gon pin_C4
 
