@@ -25,7 +25,7 @@
 #define SLAVE3 0x04
 #define ACK 0x01
 #define NACK 0xFF
-#define BUFFER_SÝZE 8
+#define BUFFER_Sï¿½ZE 8
 
 #define gon pin_C4
 
@@ -39,7 +39,7 @@ void com_set(){
             delay_ms(10);
             output_high(gon);
             delay_ms(1);
-            printf("\nSatilan ürün miktari:");
+            printf("\nSatilan urun miktari:");
             for(int i=0;i<4;i++){
             y=size[i]; printf("\n");
                for(int t=0;t<y;t++){
@@ -50,7 +50,7 @@ void com_set(){
             delay_ms(10);
             output_low(gon);
  
- printf("\nLutfen sifre gir\n");
+ printf("\nLutfen sifre giriniz.\n");
  
  }
 #int_RDA 
@@ -118,7 +118,7 @@ void main()
    enable_interrupts(INT_timer0);
    enable_interrupts(GLOBAL);
  
-   printf("\nLutfen sifre gir\n");
+   printf("\nLutfen sifre girin\n");
    while(1) // infinite loop 
    { 
    if(x==1)output_high(pin_d7);
